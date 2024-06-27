@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saudação Personalizada</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin-top: 50px;
+    }
+    .container {
+        width: 80%;
+        margin: 0 auto;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h2>Saudação Personalizada</h2>
+    <label for="nome">Digite seu nome:</label><br>
+    <input type="text" id="nome" name="nome" required><br><br>
+    <button onclick="exibirSaudacao()">Mostrar Saudação</button><br><br>
+    <p id="mensagemSaudacao"></p>
+</div>
+
+<script>
+function exibirSaudacao() {
+    var nome = document.getElementById('nome').value;
+    var mensagem = 'Olá ' + nome + ', este é meu site.';
+    document.getElementById('mensagemSaudacao').textContent = mensagem;
+}
+</script>
+
+</body>
+</html>
+
