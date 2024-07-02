@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edição de Usuários</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+    th, td {
+        border: 1px solid #198151;
+        text-align: left;
+        padding: 8px;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .editar-btn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 6px 12px;
+        border: none;
+        cursor: pointer;
+    }
+    .editar-btn:hover {
+        background-color: #45a049;
+    }
+</style>
+</head>
+<body>
+
+<h1>Edição de Usuários</h1>
+
+<table id="tabelaUsuarios">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>João</td>
+            <td>joao@example.com</td>
+            <td><button class="editar-btn" onclick="editarUsuario(this)">Editar</button></td>
+        </tr>
+        <tr>
+            <td>Maria</td>
+            <td>maria@example.com</td>
+            <td><button class="editar-btn" onclick="editarUsuario(this)">Editar</button></td>
+        </tr>
+        <tr>
+            <td>Carlos</td>
+            <td>carlos@example.com</td>
+            <td><button class="editar-btn" onclick="editarUsuario(this)">Editar</button></td>
+        </tr>
+    </tbody>
+</table>
+
+<form id="formularioEdicao">
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" name="nome" required>
+    <br><br>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    <br><br>
+    <button type="submit">Salvar Alterações</button>
+    <button type="button" onclick="cancelarEdicao()">Cancelar</button>
+    <input type="hidden" id="indiceUsuario" name="indiceUsuario">
+</form>
+
+<script>
+var usuarios = [
+    { nome: 'João', email: 'joao@example.com' },
+    { nome: 'Maria', email: 'maria@example.com' },
+    { nome: 'Carlos', email: 'carlos@example.com' }
+];
+
+
+function inicializarTabela() {
+    var tbody = document.querySelector('#tabelaUsuarios tbody');
+    tbody.innerHTML = '';
+
+    for (var i = 0; i < usuarios.length; i++) {
+        var usuario = usuarios[i];
+        var tr = document.createElement('tr');
+
+        var tdNome = document.createElement('td');
+        tdNome.textContent = usuario.nome;
+
+        var tdEmail = document.createElement('td');
+        tdEmail.textContent = usuario.email;
+
+        var tdAcao = document.createElement('td');
+        var btnEditar = document.createElement('button');
+        btnEditar.textContent = 'Editar';
+        btnEditar.className = 'editar-btn';
+        btnEditar.setAttribute('data-indice', i);
+        btnEditar.onclick = function() {
+            editarUsuario(this);
+        };
+
+        tdAcao.appendChild(btnEditar);
+
+        tr.appendChild(tdNome);
+        tr.appendChild(tdEmail);
+        tr.appendChild(tdAcao);
+
+        tbody.appendChild(tr);
+    }
+}
+
+
+function editarUsuario(botaoEditar) {
+    var indice = botaoEditar.getAttribute('data-indice');
+    var usuario = usuarios[indice];
+
+    document.getElementById('nome').value = usuario.nome;
+    document.getElementById('email').value = usuario.email;
+    document.getElementById('indiceUsuario').value = indice;
+}
+
+
+document.getElementById('formularioEdicao').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    var indice = document.getElementById('indiceUsuario').value;
+    usuarios[indice].nome = document.getElementById('nome').value;
+    usuarios[indice].email = document.getElementById('email').value;
+
+    inicializarTabela();
+    
+    document.getElementById('formularioEdicao').reset();
+    document.getElementById('indiceUsuario').value = '';
+});
+
+
+function cancelarEdicao() {
+    document.getElementById('formularioEdicao').reset();
+    document.getElementById('indiceUsuario').value = '';
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    inicializarTabela();
+});
+</script>
+
+</body>
+</html>
